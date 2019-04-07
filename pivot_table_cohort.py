@@ -16,6 +16,7 @@ cross_tab=data.groupby(['reg_time'])
 print cross_tab.agg('count')
 data_reg_total=pd.pivot_table(data=data,values='reg_value',index='reg_time',columns='real_intval',aggfunc=np.sum)
 print data_reg_total.sum(axis=1)
+# 你还
 print (data['reg_time']=='2018-06-13').sum()
 print (data['reg_time']=='2018-06-14').sum()
 pass
