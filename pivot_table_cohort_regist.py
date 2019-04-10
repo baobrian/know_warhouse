@@ -9,7 +9,6 @@ import os
 # df1=pd.read_csv('/Users/baozilin/Downloads/data/query-impala-231706.csv')
 # df2=pd.read_csv('/Users/baozilin/Downloads/data/query-impala-231721.csv')
 # df3=pd.read_csv('/Users/baozilin/Downloads/data/query-impala-231813.csv')
-# ceshi
 def cohort_register(pk,df):
     regist=pd.DataFrame()
     data=df[pk]
