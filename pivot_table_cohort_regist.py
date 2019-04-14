@@ -26,15 +26,16 @@ def cohort_register(pk,df):
 
 
 if __name__ == '__main__':
-    path='/Users/baozilin/Downloads/data/dd/'
+    path='/Users/baozilin/Downloads/data/cohort_data/data/regist/data/'
     pk=['id_no','reg_time','real_intval']
+    os.chdir(path)
     dirs=os.listdir(path)
     result_cohort=pd.DataFrame()
     for fl in dirs:
         temp=pd.read_csv(path+fl)
         cohort_temp=cohort_register(df=temp,pk=pk)
         result_cohort=result_cohort.append(cohort_temp)
-    result_cohort.to_excel()
+    result_cohort.to_excel('regist.xlsx')
 
 
 
