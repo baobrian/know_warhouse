@@ -26,16 +26,19 @@ def cohort_register(pk,df):
 
 
 if __name__ == '__main__':
-    path='/Users/baozilin/Downloads/data/cohort_data/data/regist/data/'
+    path='C:\Users\Administrator\Desktop\liushi\data\\regist\\'
+    file_save_path='C:\Users\Administrator\Desktop\liushi\\result\\'
     pk=['id_no','reg_time','real_intval']
-    os.chdir(path)
     dirs=os.listdir(path)
     result_cohort=pd.DataFrame()
     for fl in dirs:
         temp=pd.read_csv(path+fl)
         cohort_temp=cohort_register(df=temp,pk=pk)
         result_cohort=result_cohort.append(cohort_temp)
-    result_cohort.to_excel('regist.xlsx')
+    os.chdir(file_save_path)
+    # result_cohort.to_csv('rr.csv')
+    result_cohort.to_excel('regist.xlsx',  engine='xlsxwriter')
+
 
 
 
