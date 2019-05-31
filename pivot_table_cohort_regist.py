@@ -5,20 +5,18 @@ import numpy as np
 import os
 
 
-# df=pd.read_csv('/Users/baozilin/Downloads/data/query-impala-231334.csv')
-# df1=pd.read_csv('/Users/baozilin/Downloads/data/query-impala-231706.csv')
-# df2=pd.read_csv('/Users/baozilin/Downloads/data/query-impala-231721.csv')
-# df3=pd.read_csv('/Users/baozilin/Downloads/data/query-impala-231813.csv')
+
+
 def cohort_register(pk,df):
     regist=pd.DataFrame()
     data=df[pk]
     data['reg_value']=1
     data['real_value']=data['id_no'].map(lambda x: 1 if not pd.isnull(x) else 0)
-    total_reg=data.groupby(['reg_time']).size()
+    total_reg=data.groupby(['app_down_tm']).size()
     total_reg.name='reg_total'
     regist['total']=total_reg
     reg_temp=pd.pivot_table(data=data,values='real_value',\
-               index='reg_time',columns='real_intval',\
+               index='app_down_tm',columns='reg_tname_intrv',\
                aggfunc=np.sum)
     cohort_reg=reg_temp.reindex(columns=[i for i in range(0,31,1)]).fillna(0)
     cohort_30=regist.join(cohort_reg)
@@ -26,9 +24,9 @@ def cohort_register(pk,df):
 
 
 if __name__ == '__main__':
-    path='C:\Users\Administrator\Desktop\liushi\data\\regist\\'
+    path='C:\Users\Administrator\Desktop\liushi\compete_data\\fin_data\\'
     file_save_path='C:\Users\Administrator\Desktop\liushi\\result\\'
-    pk=['id_no','reg_time','real_intval']
+    pk=['id_no','app_down_tm','reg_tname_intrv']
     dirs=os.listdir(path)
     result_cohort=pd.DataFrame()
     for fl in dirs:
@@ -37,7 +35,7 @@ if __name__ == '__main__':
         result_cohort=result_cohort.append(cohort_temp)
     os.chdir(file_save_path)
     # result_cohort.to_csv('rr.csv')
-    result_cohort.to_excel('regist.xlsx',  engine='xlsxwriter')
+    result_cohort.to_excel('compete_reg.xlsx',  engine='xlsxwriter')
 
 
 
