@@ -23,7 +23,7 @@ def cohort_register(pk,df):
 
 
 if __name__ == '__main__':
-    path='C:\Users\Administrator\Desktop\liushi\data20190625\data\\'
+    path='E:\Data_temp\\20190723\data\\'
     pk=['id_no','first_tx_distr_dt','intrv']
     dirs=os.listdir(path)
     result_cohort=pd.DataFrame()
@@ -31,8 +31,9 @@ if __name__ == '__main__':
         temp=pd.read_csv(path+fl)
         cohort_temp=cohort_register(df=temp,pk=pk)
         result_cohort=result_cohort.append(cohort_temp)
-    os.chdir('C:\Users\Administrator\Desktop\liushi\data20190625\\')
-    result_cohort.to_excel('re_appl_day.xlsx',header=True)
+    os.chdir('E:\Data_temp\\20190723\\result\\')
+    result_cohort.to_excel('re_appl_day01-07.xlsx',header=True)
+
 
 
 

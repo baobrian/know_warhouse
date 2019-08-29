@@ -25,8 +25,10 @@ def map_func(para):
 
     # if para <0:
     #     return -1
-    if para>=0 and para<=3:
+    if para>=0 and para<=28:
         return 1
+    # if para>3:
+    #     return 2
     else :
         return 0
 
@@ -45,20 +47,12 @@ def map_func2(para):
 
 
 if __name__ == '__main__':
-    path='C:\Users\Administrator\Desktop\liushi\data20190531\data\\'
-    file_save_path='C:\Users\Administrator\Desktop\liushi\\data20190531\\'
+    path='C:\Users\Administrator\Desktop\liushi\data20190702\\vali\\'
+    file_save_path='C:\Users\Administrator\Desktop\liushi\\data20190702\\'
     result=join_data(path=path)
-
-    result=result[(result['draw_intrv']>=-1)]
-    print sum((result['draw_intrv']<-1))
     os.chdir(file_save_path)
-    result['categrocial']=result['draw_intrv'].apply(func=map_func)
-    # li=result.columns
-    # for ii in c_list.class_column:
-    #     if ii not in result.columns:
-    #         print ii
-    c_result=result[c_list.class_column]
-    c_result.to_csv('result_2c.csv',index=False)
+    #c_result=result[c_list.re_draw_ll]
+    result.to_csv('vali_all.csv',index=False)
     # result.to_csv('compete.csv',index=False)
     # result=result[(result['draw_intrv']>-1)]
     # print sum((result['draw_intrv']<0))
