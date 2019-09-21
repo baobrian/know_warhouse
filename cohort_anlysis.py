@@ -11,9 +11,10 @@ class CohortAnalysis() :
         self.intrv = intrv
         self.boundary=boundary
 
-    def analysis_cohort(self):
+    def analysis_cohort(self,isPercent=False):
         result = pd.DataFrame()
         if self.stat_time  is None or (self.end_time is None and self.intrv is None):
+            print('请检查end_time和intrv参数')
             raise ValueError
         if self.stat_time is not None and  self.intrv is not None:
             pk=[self.stat_time,self.intrv]
@@ -38,8 +39,14 @@ class CohortAnalysis() :
         # _result['Col_sum']=_result.apply(lambda x:x.sum(),axis=1)
         cohort_result = result.join(_result)
         cohort_result.loc['Row_sum'] = cohort_result.apply(lambda x: x.sum())
-        cohort_result.to_excel('cohort_result'+str(self.boundary)+'.xlsx', header=True)
-        return cohort_result
+        if isPercent:
+            for i in range(1,len(cohort_result.columns)):
+                cohort_result[cohort_result.columns[i]]=cohort_result[cohort_result.columns[i]]/cohort_result['daily_sum']
+            cohort_result=cohort_result.drop(['daily_sum'],axis=1)
+            cohort_result.to_excel('cohort_result_percent' + str(self.boundary) + '.xlsx', header=True)
+        else:
+            cohort_result.to_excel('cohort_result' + str(self.boundary) + '.xlsx', header=True)
+        return
 
 
 
@@ -51,5 +58,5 @@ if __name__ == '__main__':
     print data.info()
     cohort=CohortAnalysis(data=data,stat_time='lst_suc_limit',end_time='last_used_time',boundary=180)
     os.chdir(file_save_path)
-    cohort.analysis_cohort()
-    pass
+    cohort.analysis_cohort(isPercent=True)
+    print '同期群分析文件已生成'
