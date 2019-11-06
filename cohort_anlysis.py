@@ -9,7 +9,7 @@ class CohortAnalysis() :
         self.stat_time=stat_time
         self.end_time=end_time
         self.intrv = intrv
-        self.boundary=boundary
+        self.boundary=boundary+1
 
     def analysis_cohort(self,isPercent=False):
         result = pd.DataFrame()
@@ -51,12 +51,13 @@ class CohortAnalysis() :
 
 
 if __name__ == '__main__':
-    path='E:\Data_temp\\20190919\data\\'
-    file_save_path='E:\Data_temp\\20190919\\result\\'
+    path='E:\Data_temp\\20191031\data\\'
+    file_save_path='E:\Data_temp\\20191031\\result\\'
     files = os.listdir(path)
-    data=pd.read_csv(path+files[0],index_col=0)
+    # data=pd.read_csv(path+files[0],index_col=0)
+    data = pd.read_csv(path + files[0])
     print data.info()
-    cohort=CohortAnalysis(data=data,stat_time='lst_suc_limit',end_time='last_used_time',boundary=180)
+    cohort=CohortAnalysis(data=data,stat_time='app_down_tm',end_time='tname_tm',boundary=7)
     os.chdir(file_save_path)
-    cohort.analysis_cohort(isPercent=True)
+    cohort.analysis_cohort(isPercent=False)
     print '同期群分析文件已生成'
